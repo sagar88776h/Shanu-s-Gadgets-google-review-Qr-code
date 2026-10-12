@@ -3,12 +3,13 @@
 const WRITE_REVIEW_BASE = 'https://search.google.com/local/writereview?placeid=';
 
 // These open the store / Maps listing, not the "Write a review" dialog.
+// (share.google links are allowed: Google also uses them for the review form
+// link from Business Profile → "Ask for reviews". Test the link on a phone.)
 const STORE_PAGE_PATTERNS = [
   /^https?:\/\/(www\.)?google\.[a-z.]+\/maps/i,
   /^https?:\/\/maps\.google\.[a-z.]+/i,
   /^https?:\/\/maps\.app\.goo\.gl\//i,
   /^https?:\/\/goo\.gl\/maps/i,
-  /^https?:\/\/share\.google\//i,
 ];
 
 function withScheme(url) {

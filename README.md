@@ -1,6 +1,6 @@
 # Shanu's Gadgets: smart Google review page
 
-A small, fast review page for **Shanu's Gadgets** (Phones & Accessories, Madhupur Bazar, West Tripura).
+A small, fast review page for **Shanu's Gadgets** (Phones & Accessories, Madhupur Bazar, Sepahijala, Tripura).
 Customers scan a QR code at the counter and tap 1–5 stars. They can pick quick tags and optionally get suggested review text, then open Google's **"Write a review"** screen directly.
 
 - **Customer page:** `index.html` (the site root). Old QR codes that point at `…/#review` still land here.
@@ -29,7 +29,7 @@ Open **`shop.config.js`** and fill in **one** of these two fields. Until you do,
 
 1. On your phone, open the **Google Maps** app (or search "Shanu's Gadgets" on Google while signed in as the owner).
 2. Open your Business Profile and tap **"Ask for reviews"** (sometimes labelled **"Get more reviews"** or **"Share review form"**).
-3. Copy the link. It looks like `https://g.page/r/XXXXXXXXXXXX/review`.
+3. Copy the link. It looks like `https://g.page/r/XXXXXXXXXXXX/review` or `https://share.google/XXXXXXXX`.
 4. Paste it into `shop.config.js`:
    ```js
    reviewUrl: 'https://g.page/r/XXXXXXXXXXXX/review',
@@ -49,7 +49,9 @@ Open **`shop.config.js`** and fill in **one** of these two fields. Until you do,
 
 If both are filled in, `reviewUrl` wins.
 
-> ⚠️ **Do not** use a `google.com/maps/place/…`, `maps.app.goo.gl/…` or `share.google/…` link here. Those open the shop's listing page instead of the review dialog, which was the old bug. The code ignores such links for the review button and prints a warning in the browser console. (The old `share.google` link is still used for the **Directions** button, where opening the listing is what you want.)
+> ⚠️ **Do not** use a `google.com/maps/place/…` or `maps.app.goo.gl/…` link here. Those open the shop's listing page instead of the review dialog, which was the old bug. The code ignores such links for the review button and prints a warning in the browser console.
+>
+> `share.google/…` links are accepted, because Google also uses them for the review-form link. But a `share.google` link copied from the Maps **Share** button opens the shop page. Open your link on a phone once and make sure it shows the **star-rating box**. (The `share.google` link in `mapsUrl` is the shop page, which is right for the **Directions** button.)
 
 **Check it:** run `npm run dev`, tap **Open Google Review**, and confirm Google shows the star-rating box for your shop.
 
@@ -176,5 +178,5 @@ tests/                npm test
 
 ## Business details
 
-- **Shanu's Gadgets**, Agartala-Kamalasagar Road, Madhupur Bazar, West Tripura 799102
+- **Shanu's Gadgets**, Agartala-Kamalasagar Road, Madhupur Bazar, Sepahijala, Tripura 799102
 - Phone / WhatsApp: +91 70058 38381

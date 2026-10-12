@@ -15,6 +15,13 @@ test('reviewUrl is used as is, and wins over placeId', () => {
   assert.equal(link.source, 'reviewUrl');
 });
 
+test('share.google review-form links are used as is', () => {
+  const link = resolveReviewLink({ reviewUrl: 'https://share.google/yBb40ws5TBnyv5M5L' });
+  assert.equal(link.url, 'https://share.google/yBb40ws5TBnyv5M5L');
+  assert.equal(link.source, 'reviewUrl');
+  assert.equal(link.problem, null);
+});
+
 test('reviewUrl without https:// still works', () => {
   assert.equal(buildReviewUrl({ reviewUrl: 'g.page/r/CabcDEF123/review' }), 'https://g.page/r/CabcDEF123/review');
 });
@@ -24,7 +31,6 @@ test('store-page links are rejected for the review button', () => {
     'https://www.google.com/maps/place/Shanu%27s+Gadgets/@23.7,91.3,17z',
     'https://maps.app.goo.gl/abc123',
     'https://goo.gl/maps/abc123',
-    'https://share.google/IpLBwbsm6F8jadyfW',
     'https://maps.google.com/?cid=123',
   ]) {
     assert.ok(isStorePageUrl(url), url);
