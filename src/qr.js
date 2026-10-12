@@ -33,11 +33,22 @@ const state = {
   url: config.siteUrl.trim() || new URL('./', location.href).href,
   design: 'card',
   size: DEFAULT_SIZE.card,
+  style: 'premium', // 'premium' (black & gold) or 'classic' (white)
   withLogo: true,
 };
 
 const fileBase = config.shopName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const stars = `<span class="print-stars">${icons.star.repeat(5)}</span>`;
+
+function instagramHandle() {
+  try {
+    const name = new URL(config.instagram).pathname.split('/').filter(Boolean)[0];
+    return name ? `@${name}` : '';
+  } catch {
+    return '';
+  }
+}
+const insta = instagramHandle();
 
 function currentSize() {
   return SIZES[state.design].find((size) => size.id === state.size);
@@ -79,7 +90,10 @@ function cardHtml(qr) {
       <p class="pc-action-main">${esc(printText.cardAction)}</p>
       <p class="pc-action-alt" lang="hi">${esc(printText.cardActionAlt)}</p>
     </div>
-    <p class="pc-foot">${esc(printText.cardFoot)} · ${esc(config.phone)}</p>
+    <div class="pc-foot">
+      <p>${esc(printText.cardFoot)} · ${esc(config.phone)}</p>
+      ${insta ? `<p class="pc-insta">${icons.instagram}<span>${esc(insta)}</span></p>` : ''}
+    </div>
   </article>`;
 }
 
@@ -103,13 +117,13 @@ function renderSheet() {
   const sheet = $('#sheet');
   let qr;
   try {
-    qr = qrSvg(state.url, { logoHref: state.withLogo ? config.logoPng : '' });
+    qr = qrSvg(state.url, { logoHref: state.withLogo ? config.logoPng : '', style: state.style });
   } catch (error) {
     sheet.innerHTML = `<p class="sheet-error">Could not make a QR code: ${esc(error.message)}</p>`;
     return;
   }
 
-  sheet.className = `sheet sheet-${state.design}`;
+  sheet.className = `sheet sheet-${state.design} style-${state.style}`;
   sheet.style.setProperty('--w', `${size.w}mm`);
   sheet.style.setProperty('--u', `${size.w / 105}mm`);
 
@@ -192,6 +206,11 @@ $('#design').addEventListener('change', (event) => {
   renderSheet();
 });
 
+$('#style').addEventListener('change', (event) => {
+  state.style = event.target.value;
+  renderSheet();
+});
+
 $('#size').addEventListener('change', (event) => {
   state.size = event.target.value;
   renderSheet();
@@ -205,14 +224,14 @@ $('#with-logo').addEventListener('change', (event) => {
 $('#print-btn').addEventListener('click', () => window.print());
 
 $('#png-btn').addEventListener('click', async () => {
-  const canvas = await qrCanvas(state.url, { logoSrc: state.withLogo ? config.logoPng : '' });
-  canvas.toBlob((blob) => download(blob, `${fileBase}-review-qr.png`), 'image/png');
+  const canvas = await qrCanvas(state.url, { logoSrc: state.withLogo ? config.logoPng : '', style: state.style });
+  canvas.toBlob((blob) => download(blob, `${fileBase}-review-qr-${state.style}.png`), 'image/png');
 });
 
 $('#svg-btn').addEventListener('click', async () => {
   const logoHref = state.withLogo ? await logoDataUrl() : '';
-  const svg = qrSvg(state.url, { logoHref, margin: 4 });
-  download(new Blob([svg], { type: 'image/svg+xml' }), `${fileBase}-review-qr.svg`);
+  const svg = qrSvg(state.url, { logoHref, style: state.style, margin: 4 });
+  download(new Blob([svg], { type: 'image/svg+xml' }), `${fileBase}-review-qr-${state.style}.svg`);
 });
 
 new ResizeObserver(fitPreview).observe($('#preview'));

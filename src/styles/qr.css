@@ -112,6 +112,10 @@ fieldset {
   background: var(--surface);
 }
 
+.segmented-2 {
+  grid-template-columns: 1fr 1fr;
+}
+
 .segmented label {
   position: relative;
 }
@@ -335,6 +339,91 @@ fieldset {
   color: var(--muted);
   font-size: calc(var(--u) * 2.8);
   font-weight: 600;
+  line-height: 1.5;
+}
+
+.pc-insta {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--u) * 0.8);
+}
+
+.pc-insta svg {
+  width: calc(var(--u) * 3);
+  height: calc(var(--u) * 3);
+}
+
+/* Premium style: black & gold, matching the round shop logo */
+
+.style-premium {
+  --gold-line: #d6aa40;
+  --gold-text: #e3bf63;
+}
+
+.style-premium .print-card {
+  position: relative;
+  background: radial-gradient(130% 85% at 50% 0%, #25252d 0%, #0b0b0f 62%);
+  color: #fff;
+}
+
+.style-premium .print-card::before {
+  content: '';
+  position: absolute;
+  inset: calc(var(--u) * 3.2);
+  border: calc(var(--u) * 0.3) solid var(--gold-line);
+  border-radius: calc(var(--u) * 4);
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+.style-premium .pc-brand img {
+  border: calc(var(--u) * 0.35) solid var(--gold-line);
+}
+
+.style-premium .pc-tagline {
+  color: var(--gold-text);
+  font-size: calc(var(--u) * 2.4);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.style-premium .pc-title-alt,
+.style-premium .pc-action-alt {
+  color: #cfcfd6;
+}
+
+.style-premium .print-stars path {
+  stroke: var(--gold);
+}
+
+.style-premium .pc-qr {
+  border: calc(var(--u) * 0.6) solid var(--gold-line);
+  border-radius: calc(var(--u) * 5.5);
+}
+
+.style-premium .pc-foot {
+  color: #a9a9b3;
+}
+
+.style-premium .pc-insta {
+  color: var(--gold-text);
+}
+
+.style-premium .print-sticker {
+  background: radial-gradient(120% 90% at 50% 0%, #25252d 0%, #0b0b0f 65%);
+  color: #fff;
+}
+
+.style-premium .ps-qr {
+  overflow: hidden;
+  border: calc(var(--w) * 0.012) solid var(--gold-line);
+  border-radius: calc(var(--w) * 0.07);
+  background: #fff;
+}
+
+.style-premium .ps-name {
+  color: var(--gold-text);
 }
 
 /* Stickers */

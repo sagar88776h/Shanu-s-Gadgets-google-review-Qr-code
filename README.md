@@ -104,8 +104,10 @@ All words on the page live here, in English (`en`) and Hindi (`hi`). You never n
 
 ## 4. Print the QR code: `qr.html`
 
-1. **First**, set `siteUrl` in `shop.config.js` to your live website and deploy (see section 5). The QR code must contain the public address, not `localhost`.
-2. Open `https://your-site/qr.html`. It is not linked from the customer page, so bookmark it.
+1. Open `https://your-site/qr.html` **on your live website** (the address customers use). It is not linked from the customer page, so bookmark it. The QR code must contain that public address, not `localhost` or a GitHub link. Check the "Link inside the QR code" box; if `siteUrl` is set in `shop.config.js`, that address is used.
+2. Choose a **Style**:
+   - **Premium:** black and gold to match the round logo, with rounded QR dots, gold-centred corner squares and a gold ring around the logo.
+   - **Classic:** white, square dots, uses the least ink.
 3. Choose what to print:
    - **Counter card:** A6 (4 per A4 sheet, fits a 4×6" acrylic stand), A5, or an A4 poster.
    - **Stickers** for packaging: 40 mm (24 per sheet), 50 mm (15) or 60 mm (12).
@@ -113,7 +115,9 @@ All words on the page live here, in English (`en`) and Hindi (`hi`). You never n
 4. Press **Print (A4)**. In the print dialog choose **A4**, **Scale 100% / Actual size**, **Margins: None**. Dashed lines are cut guides.
 5. **Scan one printout with a phone before printing many.**
 
-**Download PNG** (2048 px) and **Download SVG** (vector, best for print shops) give you just the code. The logo in the middle is optional. With it on, the code uses Google's highest error correction, so it still scans.
+**Download PNG** (1024 px, sharp up to about 8 cm) and **Download SVG** (vector, any size, best for print shops) give you just the code, in the chosen style. The logo in the middle is optional. With it on, the code uses the highest error correction, so it still scans. Both styles were tested to decode at small sizes and with blur.
+
+Premium designs are mostly black and use more ink. For the best finish, print them at a print shop on thick card: use **Print → Save as PDF** and take the PDF.
 
 The QR code is generated in the browser by the `qrcode` package bundled with the site. No outside service is called.
 
