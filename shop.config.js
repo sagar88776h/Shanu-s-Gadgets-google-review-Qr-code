@@ -41,7 +41,7 @@ export default {
   // slash, e.g. 'https://shanus-gadgets.vercel.app/'. NOT the GitHub page.
   // Used for the QR code and for WhatsApp/Facebook link previews. While empty,
   // qr.html uses the address it is opened from, which is right on the live site.
-  siteUrl: 'https://shanu-s-gadgets-google-review-qr-code-90cuggdnf.vercel.app/',
+  siteUrl: 'https://shanu-s-gadgets-google-review-qr-co.vercel.app/',
 
   // Only fill these with your REAL current Google rating, or leave them null.
   // When both are set, the header shows e.g. "4.8 ★ · 120 Google reviews".
