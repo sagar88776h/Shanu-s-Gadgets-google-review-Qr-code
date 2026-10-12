@@ -36,7 +36,7 @@ export default {
   // Public address of this website, with a trailing slash, e.g.
   // 'https://shanus-gadgets.netlify.app/'. Used for the QR code and for
   // WhatsApp/Facebook link previews. Leave empty until the site is live.
-  siteUrl: '',
+  siteUrl: 'https://github.com/sagar88776h/Shanu-s-Gadgets-google-review-Qr-code/blob/main/shop.config.js',
 
   // Only fill these with your REAL current Google rating, or leave them null.
   // When both are set, the header shows e.g. "4.8 ★ · 120 Google reviews".
