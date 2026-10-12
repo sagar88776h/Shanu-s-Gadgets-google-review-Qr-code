@@ -20,8 +20,8 @@ export default {
   //
   // Do NOT paste a google.com/maps/…, maps.app.goo.gl or share.google link
   // here: those open the store page, not the "Write a review" screen.
-  reviewUrl: 'https://share.google/ObrqniIW3SVKtAm9x',
-  placeId: '',
+  reviewUrl: 'https://share.google/yBb40ws5TBnyv5M5L',
+  placeId: 'yBb40ws5TBnyv5M5L',
 
   // --- Contact & directions ---------------------------------------------------
   phone: '+91 70058 38381', // shown on screen and used for the Call button
