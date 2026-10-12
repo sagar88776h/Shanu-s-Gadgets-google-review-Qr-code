@@ -10,15 +10,25 @@ function capitalize(text) {
   return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
+/** An opener/closer entry is one sentence or a list of alternatives. */
+function pick(entry, variant) {
+  if (Array.isArray(entry)) return entry.length ? entry[variant % entry.length] : '';
+  return entry || '';
+}
+
 /**
  * Builds a short, plain review draft from the rating and selected tags.
- * @param {{ rating: number, tagIds: string[], s: object, shopName: string }} input
+ * `variant` picks a different wording (and tag order) for the same tags,
+ * so "New suggestion" always has something new to show.
+ * @param {{ rating: number, tagIds: string[], s: object, shopName: string, variant?: number }} input
  */
-export function buildDraft({ rating, tagIds, s, shopName }) {
+export function buildDraft({ rating, tagIds, s, shopName, variant = 0 }) {
   const { openers, closers, and, stop } = s.draft;
   const phrases = tagIds.map((id) => s.tags[id]?.phrase).filter(Boolean);
-  const parts = [fill(openers[rating] || '', { shop: shopName })];
-  if (phrases.length) parts.push(capitalize(joinList(phrases, and)) + stop);
-  parts.push(closers[rating] || '');
+  const shift = phrases.length ? variant % phrases.length : 0;
+  const ordered = [...phrases.slice(shift), ...phrases.slice(0, shift)];
+  const parts = [fill(pick(openers[rating], variant), { shop: shopName })];
+  if (ordered.length) parts.push(capitalize(joinList(ordered, and)) + stop);
+  parts.push(pick(closers[rating], variant));
   return parts.filter(Boolean).join(' ');
 }

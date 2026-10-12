@@ -41,8 +41,10 @@ test('every language has every tag and both rating word lists', () => {
       assert.ok(s.tags[id]?.label && s.tags[id]?.phrase, `${lang}: tag ${id}`);
     }
     assert.equal(s.ratingWords.length, 6, `${lang}: ratingWords`);
-    assert.equal(s.draft.openers.length, 6, `${lang}: openers`);
-    assert.equal(s.draft.closers.length, 6, `${lang}: closers`);
+    for (const rating of [1, 2, 3, 4, 5]) {
+      assert.ok([s.draft.openers[rating]].flat().filter(Boolean).length, `${lang}: opener for ${rating}★`);
+      assert.ok([s.draft.closers[rating]].flat().filter(Boolean).length, `${lang}: closer for ${rating}★`);
+    }
   }
 });
 
@@ -66,4 +68,37 @@ test('no incentive wording anywhere in the text', () => {
   for (const word of ['discount', 'free gift', 'coupon', 'offer', 'cashback', 'reward', 'छूट', 'इनाम', 'कूपन']) {
     assert.ok(!all.includes(word), word);
   }
+});
+
+test('"New suggestion" variants give different wording for the same tags', () => {
+  for (const lang of ['en', 'hi']) {
+    for (const rating of [1, 2, 3, 4, 5]) {
+      for (const tagIds of [[], rating >= 4 ? ['genuine', 'fairPrice'] : ['longWait', 'highPrice']]) {
+        const drafts = [0, 1, 2].map((variant) => buildDraft({ rating, tagIds, s: getStrings(lang), shopName, variant }));
+        assert.equal(new Set(drafts).size, 3, `${lang} ${rating}★ ${tagIds.join('+') || 'no tags'}: ${drafts.join(' | ')}`);
+        for (const d of drafts) {
+          assert.ok(d.includes(shopName), `${lang} ${rating}★: shop name in "${d}"`);
+          assert.ok(!/undefined|\{\w+\}/.test(d), `${lang} ${rating}★: no leftovers in "${d}"`);
+        }
+      }
+    }
+  }
+});
+
+test('variants keep every selected tag and only reorder them', () => {
+  const s = getStrings('en');
+  const tagIds = ['genuine', 'fairPrice', 'helpfulStaff'];
+  for (const variant of [0, 1, 2, 3, 7]) {
+    const draft = buildDraft({ rating: 5, tagIds, s, shopName, variant }).toLowerCase();
+    for (const id of tagIds) assert.ok(draft.includes(s.tags[id].phrase), `variant ${variant}: ${id}`);
+  }
+  assert.equal(
+    buildDraft({ rating: 5, tagIds, s, shopName, variant: 1 }),
+    "Really happy with my visit to Shanu's Gadgets. The prices are fair, the staff were helpful and the products are genuine. Thank you!",
+  );
+});
+
+test('a single string still works as an opener/closer (older custom strings)', () => {
+  const s = { ...getStrings('en'), draft: { openers: { 5: 'Hi {shop}.' }, closers: { 5: 'Bye.' }, and: 'and', stop: '.' } };
+  assert.equal(buildDraft({ rating: 5, tagIds: ['genuine'], s, shopName, variant: 4 }), "Hi Shanu's Gadgets. The products are genuine. Bye.");
 });
