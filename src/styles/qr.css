@@ -1,0 +1,448 @@
+/* QR print page: owner tool on screen, A4 sheet on paper. */
+
+html,
+body {
+  background: var(--surface);
+}
+
+.qr-page {
+  display: grid;
+  gap: 20px;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 16px 16px 40px;
+}
+
+@media (min-width: 900px) {
+  .qr-page {
+    grid-template-columns: 360px 1fr;
+    align-items: start;
+    padding-top: 28px;
+  }
+
+  .qr-header {
+    grid-column: 1 / -1;
+  }
+
+  .panel {
+    position: sticky;
+    top: 20px;
+  }
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--ink-soft);
+  font-size: 14px;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.qr-header h1 {
+  font-size: 28px;
+  font-weight: 780;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.qr-header p {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.panel {
+  display: grid;
+  gap: 18px;
+  padding: 20px;
+  background: var(--bg);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.field > label,
+.field > legend {
+  display: block;
+  margin-bottom: 8px;
+  padding: 0;
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+.field input[type='url'],
+.field select {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 14px;
+  background: var(--surface);
+  font-size: 15px;
+}
+
+.field-note {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+
+.field-note.is-warning {
+  color: #7a4f00;
+  font-weight: 600;
+}
+
+.segmented {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+  background: var(--surface);
+}
+
+.segmented label {
+  position: relative;
+}
+
+.segmented input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.segmented span {
+  display: grid;
+  place-items: center;
+  min-height: 44px;
+  padding: 0 6px;
+  border-radius: 11px;
+  color: var(--muted);
+  font-size: 13.5px;
+  font-weight: 650;
+  text-align: center;
+  transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+.segmented input:checked + span {
+  background: var(--bg);
+  color: var(--ink);
+  box-shadow: 0 1px 2px rgba(11, 11, 15, 0.08), 0 2px 8px -2px rgba(11, 11, 15, 0.1);
+}
+
+.segmented input:focus-visible + span {
+  outline: 2.5px solid var(--ink);
+  outline-offset: 1px;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  font-size: 14.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.check input {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--ink);
+}
+
+.actions {
+  display: grid;
+  gap: 10px;
+}
+
+.actions-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.actions-row .btn {
+  font-size: 14.5px;
+}
+
+.tip {
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--ink-soft);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.preview-panel {
+  padding: 16px;
+  border-radius: var(--radius-card);
+  background: var(--surface-2);
+}
+
+.preview {
+  position: relative;
+  overflow: hidden;
+}
+
+/* A4 sheet ------------------------------------------------------------------- */
+
+.sheet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-content: center;
+  width: 210mm;
+  height: 297mm;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 12px 32px -12px rgba(11, 11, 15, 0.3);
+  transform-origin: top left;
+  color: var(--ink);
+  text-align: center;
+}
+
+.sheet svg {
+  width: 100%;
+  height: auto;
+}
+
+.sheet-error {
+  padding: 20mm;
+  color: #a11;
+}
+
+.print-stars {
+  display: flex;
+  justify-content: center;
+  gap: calc(var(--u) * 1.2);
+}
+
+.print-stars svg {
+  width: calc(var(--u) * 5.5);
+  height: calc(var(--u) * 5.5);
+}
+
+.print-stars path {
+  fill: none;
+  stroke: var(--gold-edge);
+  stroke-width: 1.7;
+}
+
+/* Counter card */
+
+.sheet-card {
+  grid-template-columns: repeat(var(--cols), var(--w));
+  grid-auto-rows: var(--h);
+}
+
+.print-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: var(--w);
+  height: var(--h);
+  padding: calc(var(--u) * 8) calc(var(--u) * 8) calc(var(--u) * 7);
+  outline: 0.2mm dashed #c4c4ca; /* cut guide */
+  outline-offset: -0.1mm;
+}
+
+.sheet[data-cut='no'] .print-card {
+  outline: none;
+}
+
+.pc-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--u) * 3);
+  text-align: left;
+}
+
+.pc-brand img {
+  width: calc(var(--u) * 13);
+  height: calc(var(--u) * 13);
+  border-radius: 50%;
+}
+
+.pc-name {
+  font-size: calc(var(--u) * 5.2);
+  font-weight: 780;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.pc-tagline {
+  margin-top: calc(var(--u) * 0.6);
+  color: var(--muted);
+  font-size: calc(var(--u) * 3);
+  font-weight: 600;
+}
+
+.pc-title {
+  font-size: calc(var(--u) * 7);
+  font-weight: 780;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.pc-title-alt {
+  margin-top: calc(var(--u) * 1.2);
+  color: var(--ink-soft);
+  font-size: calc(var(--u) * 4);
+  font-weight: 600;
+}
+
+.pc-qr {
+  width: calc(var(--u) * 60);
+  padding: calc(var(--u) * 2);
+  border: calc(var(--u) * 0.35) solid rgba(11, 11, 15, 0.14);
+  border-radius: calc(var(--u) * 5);
+  background: #fff;
+}
+
+.pc-action-main {
+  font-size: calc(var(--u) * 4.4);
+  font-weight: 750;
+  letter-spacing: -0.01em;
+}
+
+.pc-action-alt {
+  margin-top: calc(var(--u) * 0.6);
+  color: var(--ink-soft);
+  font-size: calc(var(--u) * 3.4);
+  font-weight: 600;
+}
+
+.pc-foot {
+  color: var(--muted);
+  font-size: calc(var(--u) * 2.8);
+  font-weight: 600;
+}
+
+/* Stickers */
+
+.sheet-stickers {
+  grid-template-columns: repeat(var(--cols), var(--w));
+  grid-auto-rows: var(--w);
+  gap: 4mm;
+}
+
+.print-sticker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--w) * 0.02);
+  width: var(--w);
+  height: var(--w);
+  padding: calc(var(--w) * 0.05);
+  border-radius: calc(var(--w) * 0.12);
+  outline: 0.2mm dashed #c4c4ca; /* cut guide */
+}
+
+.ps-top {
+  font-size: calc(var(--w) * 0.062);
+  font-weight: 750;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+.ps-qr {
+  width: calc(var(--w) * 0.66);
+}
+
+.ps-name {
+  color: var(--muted);
+  font-size: calc(var(--w) * 0.058);
+  font-weight: 650;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+/* QR only */
+
+.print-plain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6mm;
+}
+
+.pp-qr {
+  width: var(--w);
+}
+
+.pp-url {
+  max-width: 160mm;
+  color: var(--muted);
+  font-size: 3.4mm;
+  word-break: break-all;
+}
+
+/* Print ------------------------------------------------------------------------ */
+
+@page {
+  size: A4 portrait;
+  margin: 0;
+}
+
+@media print {
+  html,
+  body {
+    background: #fff !important;
+  }
+
+  .qr-header,
+  .panel {
+    display: none !important;
+  }
+
+  .qr-page {
+    display: block;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .preview-panel {
+    padding: 0;
+    border-radius: 0;
+    background: none;
+  }
+
+  .preview {
+    height: auto !important;
+    overflow: visible;
+  }
+
+  .sheet {
+    position: static;
+    height: 296.5mm; /* a hair under A4 so no blank second page */
+    box-shadow: none;
+    transform: none !important;
+  }
+
+  .sheet * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Print QR codes · {{shopName}}</title>
+    <meta name="description" content="Printable review QR codes for {{shopName}}: counter card and packaging stickers." />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" type="image/png" href="/favicon-64.png" />
+    <link rel="preload" href="/fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
+  </head>
+  <body>
+    <div class="qr-page">
+      <header class="qr-header">
+        <a class="back-link" href="./">← Review page</a>
+        <h1>Print QR codes</h1>
+        <p>For the shop counter and packaging. Each code opens your review page.</p>
+      </header>
+
+      <section class="panel" aria-label="QR settings">
+        <div class="field">
+          <label for="qr-url">Link inside the QR code</label>
+          <input id="qr-url" type="url" inputmode="url" autocomplete="off" spellcheck="false" />
+          <p class="field-note" id="url-note"></p>
+        </div>
+
+        <fieldset class="field">
+          <legend>What to print</legend>
+          <div class="segmented" id="design">
+            <label><input type="radio" name="design" value="card" checked /><span>Counter card</span></label>
+            <label><input type="radio" name="design" value="stickers" /><span>Stickers</span></label>
+            <label><input type="radio" name="design" value="plain" /><span>QR only</span></label>
+          </div>
+        </fieldset>
+
+        <div class="field">
+          <label for="size">Size</label>
+          <select id="size"></select>
+        </div>
+
+        <label class="check">
+          <input type="checkbox" id="with-logo" checked />
+          <span>Shop logo in the middle of the QR</span>
+        </label>
+
+        <div class="actions">
+          <button type="button" class="btn btn-primary" id="print-btn">Print (A4)</button>
+          <div class="actions-row">
+            <button type="button" class="btn btn-soft" id="png-btn">Download PNG</button>
+            <button type="button" class="btn btn-soft" id="svg-btn">Download SVG</button>
+          </div>
+        </div>
+
+        <p class="tip">
+          In the print dialog choose <strong>A4</strong>, <strong>Scale 100% / Actual size</strong> and
+          <strong>Margins: None</strong>. Scan one printout with a phone before printing many.
+        </p>
+      </section>
+
+      <section class="preview-panel" aria-label="Print preview">
+        <div class="preview" id="preview"><div class="sheet" id="sheet"></div></div>
+      </section>
+    </div>
+    <script type="module" src="/src/qr.js"></script>
+  </body>
+</html>
