@@ -478,8 +478,9 @@
 
 .helpers {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  grid-auto-columns: minmax(0, 1fr); /* equal tiles for 3 or 4 buttons */
+  grid-auto-flow: column;
+  gap: 8px;
   margin-top: 4px;
 }
 
@@ -490,11 +491,12 @@
   justify-content: center;
   gap: 6px;
   min-height: 72px;
-  padding: 10px 6px;
+  padding: 10px 4px;
   border: 1px solid var(--hairline);
   border-radius: 18px;
   background: var(--surface);
-  font-size: 13px;
+  font-size: clamp(12px, 3.4vw, 13px);
+  white-space: nowrap;
   font-weight: 650;
   text-decoration: none;
   transition: transform 0.16s var(--ease), background-color 0.2s var(--ease);

@@ -188,6 +188,11 @@ function render() {
         <a class="helper" href="${esc(telUrl(config.phone))}" data-track="call">${icons.call}<span>${esc(s.call)}</span></a>
         <a class="helper" href="${esc(whatsappUrl(config.whatsapp, fill(s.whatsappHello, { shop: config.shopName })))}" target="_blank" rel="noopener" data-track="whatsapp">${icons.whatsapp}<span>${esc(s.whatsapp)}</span></a>
         <a class="helper" href="${esc(directionsUrl(config))}" target="_blank" rel="noopener" data-track="directions">${icons.pin}<span>${esc(s.directions)}</span></a>
+        ${
+          config.instagram?.trim()
+            ? `<a class="helper" href="${esc(config.instagram.trim())}" target="_blank" rel="noopener" data-track="instagram">${icons.instagram}<span>${esc(s.instagram)}</span></a>`
+            : ''
+        }
       </nav>
 
       <footer class="footer">

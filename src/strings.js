@@ -90,6 +90,7 @@ export const strings = {
     call: 'Call',
     whatsapp: 'WhatsApp',
     directions: 'Directions',
+    instagram: 'Instagram',
     whatsappHello: 'Hi {shop}, ',
   },
 
@@ -161,6 +162,7 @@ export const strings = {
     call: 'कॉल',
     whatsapp: 'WhatsApp',
     directions: 'रास्ता',
+    instagram: 'Instagram',
     whatsappHello: 'नमस्ते {shop}, ',
   },
 };

@@ -28,15 +28,18 @@ export default {
   whatsapp: '917005838381', // country code + number, digits only
   // Link for the "Directions" button. A Maps or share link is fine here.
   mapsUrl: 'https://share.google/IpLBwbsm6F8jadyfW',
+  // Instagram profile for the "Instagram" button. Leave empty to hide the button.
+  instagram: 'https://www.instagram.com/shanus_gadgets_official/',
 
   // --- Branding -----------------------------------------------------------------
   logo: 'logo-256.webp', // file in /public (round logo shown in the header)
   logoPng: 'logo-256.png', // PNG version, used in the QR code centre and downloads
 
-  // Public address of this website, with a trailing slash, e.g.
-  // 'https://shanus-gadgets.netlify.app/'. Used for the QR code and for
-  // WhatsApp/Facebook link previews. Leave empty until the site is live.
-  siteUrl: 'https://github.com/sagar88776h/Shanu-s-Gadgets-google-review-Qr-code/blob/main/shop.config.js',
+  // Public address of this website (what customers open), with a trailing
+  // slash, e.g. 'https://shanus-gadgets.vercel.app/'. NOT the GitHub page.
+  // Used for the QR code and for WhatsApp/Facebook link previews. While empty,
+  // qr.html uses the address it is opened from, which is right on the live site.
+  siteUrl: '',
 
   // Only fill these with your REAL current Google rating, or leave them null.
   // When both are set, the header shows e.g. "4.8 ★ · 120 Google reviews".

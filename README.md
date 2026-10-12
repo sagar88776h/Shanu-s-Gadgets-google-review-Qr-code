@@ -72,8 +72,9 @@ Everything about the business is in this one file:
 | `phone` | **Call** button and footer |
 | `whatsapp` | **WhatsApp** buttons: country code + number, digits only (`917005838381`) |
 | `mapsUrl` | **Directions** button. If empty, a Google Maps directions link is built from `placeId` or the address |
+| `instagram` | **Instagram** button (your profile link). Leave empty to hide the button |
 | `logo`, `logoPng` | Files in `public/` (round logo for the page; PNG for the QR centre) |
-| `siteUrl` | Your live address, e.g. `https://shanus-gadgets.netlify.app/`. Used inside the QR code and for WhatsApp link previews |
+| `siteUrl` | Your live website address (the one customers open, e.g. `https://your-project.vercel.app/`), **not** the GitHub page. Used inside the QR code and for WhatsApp link previews. While empty, `qr.html` uses the address it is opened from |
 | `googleRating`, `googleReviewCount` | Leave `null` unless you enter your **real** current Google numbers. When both are set, the header shows "4.8 ★ · 120 Google reviews" |
 | `defaultLanguage` | `'en'` or `'hi'` |
 | `analyticsEndpoint` | Optional click counting (see section 6) |
@@ -135,7 +136,7 @@ After the first deploy, put the final address in `siteUrl` and deploy again. Tha
 
 A static site cannot store counts on its own, because that needs a small server. The page already has a privacy-friendly hook ready for one:
 
-- Every tap (`rate`, `open_review`, `private_feedback`, `call`, `whatsapp`, `directions`, `suggest_text`, `language`) fires a browser event `shop:track`.
+- Every tap (`rate`, `open_review`, `private_feedback`, `call`, `whatsapp`, `directions`, `instagram`, `suggest_text`, `language`) fires a browser event `shop:track`.
 - If you set `analyticsEndpoint` in `shop.config.js`, the page also sends a tiny anonymous beacon such as `{"event":"open_review","via":"button","rating":5,"lang":"en"}`. No cookies and no personal data.
 
 A free way to collect them is a **Google Apps Script web app** that appends each beacon to a Google Sheet. Paste its `/exec` URL as `analyticsEndpoint`. Leave it empty to count nothing.
