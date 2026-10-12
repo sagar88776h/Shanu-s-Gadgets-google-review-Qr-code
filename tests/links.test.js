@@ -52,6 +52,13 @@ test('shop.config.js never points the review button at a store page', () => {
   if (url) assert.ok(!isStorePageUrl(url));
 });
 
+test('shop.config.js siteUrl is a website address, not the GitHub page', () => {
+  if (!shop.siteUrl) return;
+  const { hostname, protocol } = new URL(shop.siteUrl);
+  assert.notEqual(hostname, 'github.com');
+  assert.equal(protocol, 'https:');
+});
+
 test('contact links', () => {
   assert.equal(telUrl('+91 70058 38381'), 'tel:+917005838381');
   assert.equal(whatsappUrl('91 7005-838381', 'Hi there'), 'https://wa.me/917005838381?text=Hi%20there');

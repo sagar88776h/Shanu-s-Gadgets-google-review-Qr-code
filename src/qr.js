@@ -51,6 +51,7 @@ function urlWarning(url) {
   }
   try {
     const { hostname, protocol } = new URL(url);
+    if (hostname === 'github.com') return 'This is your GitHub code page, not your website. Use the address customers open (e.g. your vercel.app address).';
     if (/^(localhost|127\.|0\.0\.0\.0|192\.168\.|10\.)/.test(hostname)) return 'This is a local address: phones in the shop cannot open it.';
     if (protocol !== 'https:') return 'Use an https:// address so phones open it without warnings.';
   } catch {
