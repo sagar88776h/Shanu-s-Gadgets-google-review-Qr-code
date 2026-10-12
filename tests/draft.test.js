@@ -21,7 +21,7 @@ test('low-rating draft uses the "what went wrong" phrases', () => {
 
 test('Hindi draft uses Hindi joiner and full stop', () => {
   const draft = buildDraft({ rating: 4, tagIds: ['genuine', 'fairPrice'], s: getStrings('hi'), shopName });
-  assert.equal(draft, "Shanu's Gadgets पर अच्छा अनुभव रहा। प्रोडक्ट असली हैं और दाम सही हैं। आप भी ज़रूर आज़माएँ।");
+  assert.equal(draft, "Shanu's Gadgets पर अच्छा अनुभव रहा। प्रोडक्ट असली हैं और दाम सही हैं। यह दुकान रिकमेंड करने लायक़ है।");
 });
 
 test('no tags still gives a short draft', () => {

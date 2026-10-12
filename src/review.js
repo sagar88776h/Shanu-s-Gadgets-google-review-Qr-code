@@ -30,7 +30,9 @@ const state = {
   draftOpen: false,
   draftEdited: false,
   draftText: '',
-  draftVariant: 0, // which wording "New suggestion" is on
+  // Which wording "New suggestion" is on. Starts at random so customers don't all
+  // get the same first draft for the same stars and tags.
+  draftVariant: Math.floor(Math.random() * 6),
 };
 let s = getStrings(state.lang);
 
