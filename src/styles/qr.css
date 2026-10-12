@@ -112,6 +112,10 @@ fieldset {
   background: var(--surface);
 }
 
+.segmented-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
 .segmented label {
   position: relative;
 }

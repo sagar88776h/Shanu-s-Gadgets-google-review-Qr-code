@@ -3,6 +3,7 @@ import './styles/qr.css';
 import config from '../shop.config.js';
 import { printText } from './strings.js';
 import { qrSvg, qrCanvas } from './lib/qr-svg.js';
+import { resolveReviewLink } from './lib/links.js';
 import { icons } from './icons.js';
 
 // Sizes in millimetres. Everything is laid out on an A4 sheet (210 × 297 mm).
@@ -29,8 +30,15 @@ const $ = (selector) => document.querySelector(selector);
 const ESCAPES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
 const esc = (value) => String(value).replace(/[&<>"']/g, (c) => ESCAPES[c]);
 
+const siteLink = config.siteUrl.trim() || new URL('./', location.href).href;
+// The Google link exactly as entered in shop.config.js (a share.google link is fine
+// on printed codes: it opens the Google listing with its "Write a review" button).
+const TARGETS = { google: config.reviewUrl.trim() || resolveReviewLink(config).url, site: siteLink };
+
 const state = {
-  url: config.siteUrl.trim() || new URL('./', location.href).href,
+  target: 'google',
+  url: TARGETS.google,
+  style: 'premium',
   design: 'card',
   size: DEFAULT_SIZE.card,
   withLogo: true,
@@ -43,10 +51,8 @@ function currentSize() {
   return SIZES[state.design].find((size) => size.id === state.size);
 }
 
-const autoUrl = state.url;
-
 function urlWarning(url) {
-  if (!config.siteUrl.trim() && url === autoUrl) {
+  if (!config.siteUrl.trim() && url === siteLink) {
     return 'siteUrl is empty in shop.config.js, so this uses the current address. Set it to your live website before printing.';
   }
   try {
@@ -103,7 +109,7 @@ function renderSheet() {
   const sheet = $('#sheet');
   let qr;
   try {
-    qr = qrSvg(state.url, { logoHref: state.withLogo ? config.logoPng : '' });
+    qr = qrSvg(state.url, { logoHref: state.withLogo ? config.logoPng : '', style: state.style });
   } catch (error) {
     sheet.innerHTML = `<p class="sheet-error">Could not make a QR code: ${esc(error.message)}</p>`;
     return;
@@ -139,7 +145,11 @@ function renderSizeOptions() {
 function renderUrlNote() {
   const warning = urlWarning(state.url);
   const note = $('#url-note');
-  note.textContent = warning || 'Looks good. Customers who scan will land on your review page.';
+  const ok =
+    state.target === 'google' && state.url === TARGETS.google
+      ? 'Customers who scan go straight to your Google review page.'
+      : 'Looks good. Customers who scan will land on your review page.';
+  note.textContent = warning || ok;
   note.classList.toggle('is-warning', Boolean(warning));
 }
 
@@ -185,6 +195,19 @@ $('#qr-url').addEventListener('input', (event) => {
   renderSheet();
 });
 
+$('#target').addEventListener('change', (event) => {
+  state.target = event.target.value;
+  state.url = TARGETS[state.target];
+  $('#qr-url').value = state.url;
+  renderUrlNote();
+  renderSheet();
+});
+
+$('#style').addEventListener('change', (event) => {
+  state.style = event.target.value;
+  renderSheet();
+});
+
 $('#design').addEventListener('change', (event) => {
   state.design = event.target.value;
   state.size = DEFAULT_SIZE[state.design];
@@ -205,13 +228,13 @@ $('#with-logo').addEventListener('change', (event) => {
 $('#print-btn').addEventListener('click', () => window.print());
 
 $('#png-btn').addEventListener('click', async () => {
-  const canvas = await qrCanvas(state.url, { logoSrc: state.withLogo ? config.logoPng : '' });
+  const canvas = await qrCanvas(state.url, { logoSrc: state.withLogo ? config.logoPng : '', style: state.style });
   canvas.toBlob((blob) => download(blob, `${fileBase}-review-qr.png`), 'image/png');
 });
 
 $('#svg-btn').addEventListener('click', async () => {
   const logoHref = state.withLogo ? await logoDataUrl() : '';
-  const svg = qrSvg(state.url, { logoHref, margin: 4 });
+  const svg = qrSvg(state.url, { logoHref, margin: 4, style: state.style });
   download(new Blob([svg], { type: 'image/svg+xml' }), `${fileBase}-review-qr.svg`);
 });
 

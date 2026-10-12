@@ -19,11 +19,27 @@
       </header>
 
       <section class="panel" aria-label="QR settings">
+        <fieldset class="field">
+          <legend>Where the QR goes</legend>
+          <div class="segmented segmented-2" id="target">
+            <label><input type="radio" name="target" value="google" checked /><span>Google reviews</span></label>
+            <label><input type="radio" name="target" value="site" /><span>Review website</span></label>
+          </div>
+        </fieldset>
+
         <div class="field">
           <label for="qr-url">Link inside the QR code</label>
           <input id="qr-url" type="url" inputmode="url" autocomplete="off" spellcheck="false" />
           <p class="field-note" id="url-note"></p>
         </div>
+
+        <fieldset class="field">
+          <legend>QR style</legend>
+          <div class="segmented segmented-2" id="style">
+            <label><input type="radio" name="style" value="premium" checked /><span>Premium</span></label>
+            <label><input type="radio" name="style" value="classic" /><span>Classic</span></label>
+          </div>
+        </fieldset>
 
         <fieldset class="field">
           <legend>What to print</legend>
