@@ -117,7 +117,10 @@ function renderSheet() {
   const sheet = $('#sheet');
   let qr;
   try {
-    qr = qrSvg(state.url, { logoHref: state.withLogo ? config.logoPng : '', style: state.style });
+    // Dark (premium) designs get the full 4-module white quiet zone that scanners
+    // expect; on white classic designs the paper around the code provides it.
+    const margin = state.style === 'premium' ? 4 : 2;
+    qr = qrSvg(state.url, { logoHref: state.withLogo ? config.logoPng : '', style: state.style, margin });
   } catch (error) {
     sheet.innerHTML = `<p class="sheet-error">Could not make a QR code: ${esc(error.message)}</p>`;
     return;
