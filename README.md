@@ -1,6 +1,6 @@
 # Shanu's Gadgets: smart Google review page
 
-A small, fast review page for **Shanu's Gadgets** (Phones & Accessories, Madhupur Bazar, West Tripura).
+A small, fast review page for **Shanu's Gadgets** (Phones & Accessories, Madhupur Bazar, Sepahijala, Tripura).
 Customers scan a QR code at the counter and tap 1–5 stars. They can pick quick tags and optionally get suggested review text, then open Google's **"Write a review"** screen directly.
 
 - **Customer page:** `index.html` (the site root). Old QR codes that point at `…/#review` still land here.
@@ -176,5 +176,5 @@ tests/                npm test
 
 ## Business details
 
-- **Shanu's Gadgets**, Agartala-Kamalasagar Road, Madhupur Bazar, West Tripura 799102
+- **Shanu's Gadgets**, Agartala-Kamalasagar Road, Madhupur Bazar, Sepahijala, Tripura 799102
 - Phone / WhatsApp: +91 70058 38381
