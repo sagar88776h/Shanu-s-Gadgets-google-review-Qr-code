@@ -13,14 +13,16 @@ export default {
   // --- Google review button --------------------------------------------------
   // Fill in ONE of these (see README → "Set up the Google review link").
   //
-  // reviewUrl: the short link from Google Business Profile → "Ask for reviews",
-  //            e.g. 'https://g.page/r/XXXXXXXXXXXX/review'. Used as is.
+  // reviewUrl: the review link from Google Business Profile → "Ask for reviews"
+  //            (looks like https://g.page/r/…/review or https://share.google/…).
+  //            Used as is. Open it on your phone once: it must show Google's
+  //            star-rating box, not just your shop page.
   // placeId:   your Place ID from Google's "Place ID Finder", e.g. 'ChIJ…'.
   //            Used to build https://search.google.com/local/writereview?placeid=…
   //
-  // Do NOT paste a google.com/maps/…, maps.app.goo.gl or share.google link
-  // here: those open the store page, not the "Write a review" screen.
-  reviewUrl: 'https://share.google/ObrqniIW3SVKtAm9x',
+  // Do NOT paste a google.com/maps/… or maps.app.goo.gl link here: those open
+  // the shop page, not the "Write a review" screen.
+  reviewUrl: 'https://share.google/yBb40ws5TBnyv5M5L',
   placeId: '',
 
   // --- Contact & directions ---------------------------------------------------
