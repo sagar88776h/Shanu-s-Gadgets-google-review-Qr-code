@@ -20,7 +20,7 @@ export default {
   //
   // Do NOT paste a google.com/maps/…, maps.app.goo.gl or share.google link
   // here: those open the store page, not the "Write a review" screen.
-  reviewUrl: '',
+  reviewUrl: 'https://share.google/ObrqniIW3SVKtAm9x',
   placeId: '',
 
   // --- Contact & directions ---------------------------------------------------
