@@ -93,7 +93,7 @@ All words on the page live here, in English (`en`) and Hindi (`hi`). You never n
   genuine: { label: 'Genuine products', phrase: 'the products are genuine' },
   ```
   To add a new chip, add an id to `tagGroups`, then add a `tags` entry with that id in each language.
-- **Suggested review text** is built as: opener (by star rating) + the selected chips' phrases + closer. Edit `draft.openers` and `draft.closers` (position 1 = 1★ … position 5 = 5★).
+- **Suggested review text** is built as: opener (by star rating) + the selected chips' phrases + closer. Edit `draft.openers` and `draft.closers`; each has a list of wordings for 1★ to 5★. The **New suggestion** button steps through those wordings (and reorders the chip phrases), so add more lines for more variety.
 - **Add a language:** copy the whole `en: { … }` block, paste it after `hi`, change the key (e.g. `bn:` for Bengali) and translate. Anything you skip falls back to English. The language toggle shows it automatically.
 - **Header tagline per language:** English uses `tagline` from `shop.config.js`. Hindi has its own `tagline` in the `hi` block.
 - **Printed text** on the counter card and stickers is in `printText` at the bottom of the file.
@@ -136,7 +136,7 @@ After the first deploy, put the final address in `siteUrl` and deploy again. Tha
 
 A static site cannot store counts on its own, because that needs a small server. The page already has a privacy-friendly hook ready for one:
 
-- Every tap (`rate`, `open_review`, `private_feedback`, `call`, `whatsapp`, `directions`, `instagram`, `suggest_text`, `language`) fires a browser event `shop:track`.
+- Every tap (`rate`, `open_review`, `private_feedback`, `call`, `whatsapp`, `directions`, `instagram`, `suggest_text`, `new_suggestion`, `language`) fires a browser event `shop:track`.
 - If you set `analyticsEndpoint` in `shop.config.js`, the page also sends a tiny anonymous beacon such as `{"event":"open_review","via":"button","rating":5,"lang":"en"}`. No cookies and no personal data.
 
 A free way to collect them is a **Google Apps Script web app** that appends each beacon to a Google Sheet. Paste its `/exec` URL as `analyticsEndpoint`. Leave it empty to count nothing.

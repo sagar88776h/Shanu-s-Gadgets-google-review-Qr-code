@@ -443,6 +443,17 @@
   transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
 
+.draft textarea.is-fresh {
+  animation: fresh-text 0.9s var(--ease);
+}
+
+@keyframes fresh-text {
+  from {
+    background-color: var(--gold-soft);
+    border-color: var(--gold-edge);
+  }
+}
+
 .draft textarea:focus {
   outline: none;
   border-color: var(--ink);

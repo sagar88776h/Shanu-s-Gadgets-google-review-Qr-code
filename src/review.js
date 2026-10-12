@@ -30,6 +30,7 @@ const state = {
   draftOpen: false,
   draftEdited: false,
   draftText: '',
+  draftVariant: 0, // which wording "New suggestion" is on
 };
 let s = getStrings(state.lang);
 
@@ -67,7 +68,7 @@ function reviewLinkAttrs() {
 }
 
 function currentDraft() {
-  return buildDraft({ rating: state.rating, tagIds: [...state.tags], s, shopName: config.shopName });
+  return buildDraft({ rating: state.rating, tagIds: [...state.tags], s, shopName: config.shopName, variant: state.draftVariant });
 }
 
 function privateMessage() {
@@ -316,10 +317,23 @@ app.addEventListener('click', (event) => {
       track('suggest_text', { rating: state.rating, lang: state.lang });
       return;
     }
-    case 'rebuild-btn':
+    case 'rebuild-btn': {
+      // Step to the next wording; skip any that would look the same as now.
+      const textarea = $('#draft-text');
+      const before = textarea.value.trim();
+      for (let tries = 0; tries < 6; tries++) {
+        state.draftVariant++;
+        if (currentDraft() !== before) break;
+      }
       state.draftEdited = false;
-      $('#draft-text').value = currentDraft();
+      textarea.value = currentDraft();
+      textarea.classList.remove('is-fresh');
+      void textarea.offsetWidth; // restart the highlight animation
+      textarea.classList.add('is-fresh');
+      toast(s.newSuggestionToast);
+      track('new_suggestion', { rating: state.rating, lang: state.lang });
       return;
+    }
     case 'copy-open': {
       if (guardUnconfigured(event)) return;
       // Let the link open normally (direct tap = no popup blocker). Copy first.
