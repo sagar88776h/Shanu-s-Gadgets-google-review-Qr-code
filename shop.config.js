@@ -8,7 +8,7 @@ export default {
   shopName: "Shanu's Gadgets",
   tagline: 'Phones & Accessories',
   city: 'Madhupur', // used in "Loved by customers in …"
-  address: 'Agartala-Kamalasagar Road, Madhupur Bazar, West Tripura 799102',
+  address: 'Agartala-Kamalasagar Road, Madhupur Bazar, Sepahijala Tripura 799102',
 
   // --- Google review button --------------------------------------------------
   // Fill in ONE of these (see README → "Set up the Google review link").
